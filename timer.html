@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+	<style>
+	body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.timer-container {
+    text-align: center;
+}
+
+.timer {
+    font-size: 9em;
+    font-family: 'Arial', sans-serif;
+    border: 2px solid #333;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+	</style>
+</head>
+<body>
+    <div class="timer-container">
+        <div class="timer" id="timer">
+            <span id="days">00</span>
+            <span>:</span>
+            <span id="hours">00</span>
+            <span>:</span>
+            <span id="minutes">00</span>
+            <span>:</span>
+            <span id="seconds">00</span>
+        </div>
+    </div>
+    <script>
+	function zeroTo(num){
+		return num< 10 ? `0${num}` : num;
+	}
+	document.addEventListener('DOMContentLoaded', function() {
+    // Setting the end date of the timer (date and time)
+    const countDownDate = new Date("Dec 15, 2023 22:20:59").getTime();
+	
+    // Timer update every second
+    const x = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+
+        // Calculation of days, hours, minutes and seconds
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Displaying results in elements with matching ids
+        document.getElementById("days").innerHTML = days;
+        document.getElementById("hours").innerHTML = hours;
+        document.getElementById("minutes").innerHTML = minutes;
+        document.getElementById("seconds").innerHTML = zeroTo(seconds);
+
+        // If the timer has expired, display a message
+        if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("timer").innerHTML = "Time is up";
+        }
+    }, 1000);
+});
+
+	</script>
+</body>
+</html>
